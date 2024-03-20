@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ChattingHead from "../ChattingHead";
 import { User } from "../Contacts";
@@ -41,7 +41,7 @@ const Chatting = ({ contact }: ChattingProps) => {
         {messages?.map((message: any, index: number) => {
           if (message?.sender === user?.id) {
             return (
-              <div className="chat chat-end mb-2 ml-40">
+              <div className="chat chat-end mb-2 ml-40" key={index}>
                 <div className="chat-bubble text-white bg-[#ef4444]">
                   {message?.message}
                 </div>
