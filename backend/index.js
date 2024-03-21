@@ -11,7 +11,6 @@ const Messages = require("./models/message");
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
 const session = require("express-session");
-const jwt = require("jsonwebtoken");
 const MongoStore = require("connect-mongo");
 const cookieParser = require("cookie-parser");
 
