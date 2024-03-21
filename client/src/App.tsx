@@ -1,40 +1,25 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import AuthPage from "./Pages/AuthPage";
 import ChatsPage from "./Pages/ChatsPage";
-import { useEffect, useMemo } from "react";
-import { io } from "socket.io-client";
+import { useMemo, createContext } from "react";
 import { BASE_URL } from "./config";
+import { io } from "socket.io-client";
+import RegisterPage from "./Pages/RegisterPage";
+import ProfilePage from "./Pages/ProfilePage";
+export const SocketContext = createContext<any>(null);
 function App() {
-  const navigate = useNavigate();
-  const userData = localStorage?.getItem("user");
-  const user = userData ? JSON.parse(userData) : null;
   const socket = useMemo(() => {
     return io(BASE_URL);
   }, []);
-  useEffect(() => {
-    if (user === null) {
-      console.log("login ");
-      navigate("/login");
-    } else {
-      navigate("/");
-    }
-    socket.on("connect", () => {
-      console.log("connected", socket.id);
-    });
-    socket.on("welcome", (s) => {
-      console.log(s);
-    });
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
   return (
-    <>
+    <SocketContext.Provider value={socket}>
       <Routes>
         <Route path="/login" element={<AuthPage />} />
+        <Route path="/Register" element={<RegisterPage />} />
+        <Route path="/Profile" element={<ProfilePage />} />
         <Route path="/" element={<ChatsPage />} />
       </Routes>
-    </>
+    </SocketContext.Provider>
   );
 }
 

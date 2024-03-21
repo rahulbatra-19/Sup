@@ -1,13 +1,17 @@
 import axios from "@/utils";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { CgRename } from "react-icons/cg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@/components/ui/button";
-const AuthPage = () => {
-  const navigate = useNavigate();
-  const [username, setUserName] = useState<string>("");
+const RegisterPage = () => {
+  const [name, setName] = useState<string>("");
   const [pin, setPin] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+
+  const navigate = useNavigate();
+  // const socket = useContext<any>(SocketContext);
   const onSubmit = async (e: any) => {
     if (pin.length !== 4) {
       toast.error("Pin too short!!");
@@ -15,16 +19,17 @@ const AuthPage = () => {
     }
     e.preventDefault();
     try {
-      const { data: response } = await axios.post("User/authenticate", {
+      const { data: response } = await axios.post("User/register", {
         username,
         pin,
+        name,
       });
       console.log("response", response);
       if (response?.error) {
         toast.error(response?.error);
       } else {
         if (!response?.user) {
-          toast.error(response?.message);
+          toast(response?.message);
         } else {
           localStorage.setItem("user", JSON.stringify(response?.user)); //
           navigate("/");
@@ -37,21 +42,23 @@ const AuthPage = () => {
   return (
     <div className="flex ">
       <div className="hidden lg:block lg:w-[50%]">
-        <img src="https://i.imgur.com/AUjeE5u.png" alt="" />
+        <img src="https://i.imgur.com/yjC5ckM.png" alt="" />
       </div>
-      <div className="h-[100vh] w-full bg-[#e7c8c8]  flex justify-center items-center gap-2 flex-1 flex-col relative">
+      <div className="h-[100vh] w-full  bg-[#e7c8c8] flex justify-center items-center gap-2 flex-1 flex-col relative">
         <Button
-          onClick={() => navigate("/register")}
+          onClick={() => navigate("/login")}
           className="absolute right-10 top-10 bg-[#ef4444] hover:bg-[#ef4444] hover:opacity-60"
         >
-          Register
+          Login
         </Button>
-        <div className=" flex flex-col gap-3 bg-white p-6 rounded-3xl lg:w-[55%]">
+        <div className=" flex flex-col gap-3 bg-white p-6 rounded-3xl">
           <div className="flex flex-col justify-center items-center mb-4">
             <h1 className="font-bold text-2xl mb-3 text-[#ef4444]">
-              Login In{" "}
+              Create An Account
             </h1>
-            <p className="text-gray-400 text-sm">Start chatting!</p>
+            <p className="text-gray-400 text-sm">
+              Enter your email below to create your account
+            </p>
           </div>
           <label className="input input-bordered flex items-center gap-2 bg-white">
             <svg
@@ -62,18 +69,25 @@ const AuthPage = () => {
             >
               <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
             </svg>
-
             <input
               type="text"
-              className="grow bg-white text-black"
-              name="username"
-              value={username}
+              className="grow"
               placeholder="Username"
-              onChange={(e) => {
-                setUserName(e.target.value);
-              }}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </label>
+          <label className="input input-bordered flex items-center gap-2 bg-white">
+            <CgRename className="w-4 h-4 opacity-70" />
+            <input
+              type="text"
+              className="grow"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+
           <label className="input input-bordered flex items-center gap-2 bg-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -90,12 +104,10 @@ const AuthPage = () => {
             <input
               type="password"
               className="grow"
+              placeholder="Pin"
               maxLength={4}
               value={pin}
-              onChange={(e) => {
-                setPin(e.target.value);
-              }}
-              placeholder="Pin"
+              onChange={(e) => setPin(e.target.value)}
             />
           </label>
           <Button
@@ -111,4 +123,4 @@ const AuthPage = () => {
   );
 };
 
-export default AuthPage;
+export default RegisterPage;

@@ -48,20 +48,22 @@ const ContactCard = ({ user, setContact }: ContactCardProps) => {
         setContact(user);
       }}
     >
-      <Avatar className="w-14 h-14">
-        <AvatarImage src="https://github.com/shadcn.png" />
+      <Avatar className="lg:w-14 lg:h-14 w-10 h-10">
+        <AvatarImage src={user?.avatar} />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       <div className="flex justify-between flex-1">
         <div className="flex flex-col">
-          <span className="font-bold text-lg ">{user?.username}</span>
-          <span className="text-gray-400">
+          <span className="font-bold text-md lg:text-lg ">
+            {user?.username}
+          </span>
+          <span className="text-gray-400 text-xs lg:text-base">
             {lastMessage?.message || user?.description}
           </span>
         </div>
         <div className="flex flex-col">
           {lastMessage && (
-            <span className="text-gray-400 text-sm mb-2">
+            <span className="text-gray-400  text-xs lg:text-sm mb-2">
               {getTime(lastMessage?.createdAt)}
             </span>
           )}

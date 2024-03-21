@@ -1,15 +1,24 @@
 const mongoose = require("mongoose");
 
 const groupSchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    unique: true,
+  },
   participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  groupImage: String,
+  groupImage: {
+    type: String,
+    default: "https://github.com/shadcn.png",
+  },
   conversation: {
-    type: Schhema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Conversation",
   },
+  description: {
+    type: String,
+  },
   // Additional group properties
-})();
+});
 
 const Groups = mongoose.model("Group", groupSchema);
 module.exports = Groups;

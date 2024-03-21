@@ -1,14 +1,19 @@
 import EmojiPicker from "emoji-picker-react";
 import React, { useEffect, useRef, useState } from "react";
 import { BsEmojiSmile, BsFillSendFill } from "react-icons/bs";
-import { User } from "../Contacts";
-import { toast } from "react-toastify";
-import axios from "@/utils";
 interface MessageInputProps {
-  contact?: User;
+  contact?: any;
+  socket: any;
+  setMessages: React.Dispatch<any>;
+  isGroup: boolean;
 }
 
-const MessageInput = ({ contact }: MessageInputProps) => {
+const MessageInput = ({
+  contact,
+  socket,
+  setMessages,
+  isGroup,
+}: MessageInputProps) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
   const [emojiObject, setEmojiObject] = useState<any>({});
   const [messageText, setMessageText] = useState<string>("");
@@ -16,24 +21,37 @@ const MessageInput = ({ contact }: MessageInputProps) => {
   const user = userData ? JSON.parse(userData) : null;
   const emojiRef = useRef<any>();
   const sendMessage = async () => {
-    try {
-      await axios.post("/conversation/OneTOne", {
+    if (!isGroup) {
+      socket.emit("message", { messageText, contact, user });
+    } else {
+      socket.emit("messageGroup", {
         messageText,
-        contact,
         user,
+        conversationId: contact?.conversation?._id,
       });
-      setMessageText("");
-    } catch (error) {
-      toast.error("Error while sending text ");
     }
+    // try {
+    // await axios.post("/conversation/OneTOne", {
+    //     messageText,
+    //     contact,
+    //     user,
+    //   });
+    setMessages((prev: any) => [
+      ...prev,
+      { sender: user?.id, message: messageText },
+    ]);
+    setMessageText("");
+    // } catch (error) {
+    //   toast.error("Error while sending text ");
+    // }
   };
   React.useMemo(() => {
     if (emojiObject?.emoji) setMessageText((prev) => prev + emojiObject?.emoji);
   }, [emojiObject]);
 
-  const handleOutsideClickShareOptions = (e: any) => {
+  const handleOutsideClickShareOptions = () => {
     if (emojiRef.current !== null) {
-      if (emojiRef.current.contains(e.target)) return;
+      // if (emojiRef.current.contains(e.target)) return;
     }
     setShowEmojiPicker(false);
   };
@@ -46,8 +64,7 @@ const MessageInput = ({ contact }: MessageInputProps) => {
   return (
     <div className=" flex h-[10%] justify-between gap-2">
       <div className="bg-white rounded-3xl flex px-6 items-center justify-between flex-1 relative">
-        <input
-          type="text"
+        <textarea
           placeholder="Write Message!"
           className="outline-none text-lg bg-white flex-1 mr-4 "
           value={messageText}
@@ -66,7 +83,11 @@ const MessageInput = ({ contact }: MessageInputProps) => {
         </button>
         {showEmojiPicker && (
           <div className="absolute right-8 bottom-10" ref={emojiRef}>
-            <EmojiPicker onEmojiClick={setEmojiObject} />
+            <EmojiPicker
+              onEmojiClick={setEmojiObject}
+              height={400}
+              width={300}
+            />
           </div>
         )}
       </div>
