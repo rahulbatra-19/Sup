@@ -164,22 +164,20 @@ const ProfilePage = () => {
                     <AvatarImage src={user?.avatar || group?.groupImage} />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
-                  {isOwner ||
-                    (group?.name && (
-                      <label
-                        htmlFor="image"
-                        className="cursor-pointer text-black  absolute top-10 "
-                        style={{
-                          top: "50px",
-                          right: "23px",
-                        }}
-                      >
-                        <span className="">
-                          <CiEdit className="text-3xl text-black bg-gray-200 opacity-80 rounded-full p-2" />
-                        </span>
-                      </label>
-                    ))}
-
+                  {isOwner && (
+                    <label
+                      htmlFor="image"
+                      className="cursor-pointer text-black  absolute top-10 "
+                      style={{
+                        top: "50px",
+                        right: "23px",
+                      }}
+                    >
+                      <span className="">
+                        <CiEdit className="text-3xl text-black bg-gray-200 opacity-80 rounded-full p-2" />
+                      </span>
+                    </label>
+                  )}
                   <input
                     type="file"
                     id="image"
@@ -320,7 +318,7 @@ const ProfilePage = () => {
           </div>
         </div>
       )}
-      <div className="fixed bottom-10 w-[90%]  lg:hidden">
+      <div className="fixed bottom-3 w-[90%]  lg:hidden">
         <Sidebar user={userDetails} />
       </div>
       <ToastContainer />

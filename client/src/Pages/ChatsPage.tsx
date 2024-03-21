@@ -66,7 +66,7 @@ const ChatsPage = () => {
               <div className="lg:w-[35%] flex h-[90%] flex-col gap-2">
                 <Contacts setContact={setContact} />
               </div>
-              <div className="fixed bottom-10 w-[90%]">
+              <div className="fixed bottom-3 w-[90%]">
                 <Sidebar user={user} />
               </div>
             </>
@@ -75,7 +75,7 @@ const ChatsPage = () => {
               <div className="lg:w-[35%] flex h-[90%] flex-col justify-center  gap-3">
                 <Chatting contact={contact} setContact={setContact} />
               </div>
-              <div className="fixed bottom-10 w-[90%]">
+              <div className="fixed bottom-3 w-[90%]">
                 <Sidebar user={user} />
               </div>
             </>

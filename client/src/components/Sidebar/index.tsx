@@ -10,7 +10,7 @@ const Sidebar = ({ user }: { user: User }) => {
   const navigate = useNavigate();
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
   return (
-    <div className="bg-[#010019]  h-[50px] py-8 lg:h-full   lg:w-[6%]  rounded-2xl flex lg:flex-col lg:pt-40 2xl:pt-80 justify-center lg:justify-between lg:py-10 items-center">
+    <div className="bg-[#010019]   h-[50px] py-8 lg:h-full   lg:w-[6%]  rounded-2xl flex lg:flex-col lg:pt-40 2xl:pt-80 justify-center lg:justify-between lg:py-10 items-center">
       <div className="flex lg:flex-col justify-between gap-20 ">
         <button
           onClick={(e) => {
