@@ -47,6 +47,9 @@ const ChatsPage = () => {
     };
   }, [socket]);
   console.log("width ", windowWidth);
+  if (!user) {
+    return <></>;
+  }
   return (
     <>
       {windowWidth > 1024 ? (

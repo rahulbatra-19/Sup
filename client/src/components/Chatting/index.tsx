@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ChattingHead from "../ChattingHead";
 import MessageInput from "../MessageInput";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import axios from "@/utils";
 import { SocketContext } from "../../App.tsx";
 interface ChattingProps {
@@ -192,6 +192,7 @@ const Chatting = ({ contact, setContact }: ChattingProps) => {
         setMessages={setMessages}
         isGroup={contact?.conversation?.isGroup ?? false}
       />
+      <ToastContainer />
     </>
   );
 };
