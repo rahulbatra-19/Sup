@@ -49,9 +49,9 @@ const MessageInput = ({
     if (emojiObject?.emoji) setMessageText((prev) => prev + emojiObject?.emoji);
   }, [emojiObject]);
 
-  const handleOutsideClickShareOptions = () => {
+  const handleOutsideClickShareOptions = (e: any) => {
     if (emojiRef.current !== null) {
-      // if (emojiRef.current.contains(e.target)) return;
+      if (emojiRef.current.contains(e.target)) return;
     }
     setShowEmojiPicker(false);
   };

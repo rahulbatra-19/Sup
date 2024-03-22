@@ -119,7 +119,7 @@ const Chatting = ({ contact, setContact }: ChattingProps) => {
                 console.log("isGroup");
                 return (
                   <div className="chat chat-end mb-2 ml-40" key={index}>
-                    <div className="chat-bubble text-white bg-[#ef4444]">
+                    <div className="chat-bubble text-white bg-[#ef4444] text-xs sm:text-base">
                       {message?.message}
                     </div>
                   </div>
@@ -139,7 +139,7 @@ const Chatting = ({ contact, setContact }: ChattingProps) => {
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
                     </div>
-                    <div className="chat-bubble bg-slate-200 text-gray-800">
+                    <div className="chat-bubble bg-slate-200 text-gray-800 text-xs sm:text-base">
                       {message?.message}
                     </div>
                   </div>
@@ -153,7 +153,7 @@ const Chatting = ({ contact, setContact }: ChattingProps) => {
               if (message?.sender === user?.id) {
                 return (
                   <div className="chat chat-end mb-2 ml-40" key={index}>
-                    <div className="chat-bubble text-white bg-[#ef4444]">
+                    <div className="chat-bubble text-xs sm:text-base text-white bg-[#ef4444]">
                       {message?.message}
                     </div>
                   </div>
@@ -170,7 +170,7 @@ const Chatting = ({ contact, setContact }: ChattingProps) => {
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
                     </div>
-                    <div className="chat-bubble bg-slate-200 text-gray-800">
+                    <div className="chat-bubble bg-slate-200 text-gray-800 text-xs sm:text-base">
                       {message?.message}
                     </div>
                   </div>
